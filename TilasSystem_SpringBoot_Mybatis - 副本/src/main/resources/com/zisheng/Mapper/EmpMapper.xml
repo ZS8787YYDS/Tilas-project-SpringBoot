@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zisheng.Mapper.EmpMapper">
+    <!-- 通过sql提取出SQL字段，设置id值，简化代码  -->
+    <sql id="searchByCondition">select id, username, password, name, gender, image, job, entry_date, dep_id, create_time, update_time from emp_table</sql>
+    <!--根据ID删除员工-->
+    <delete id="deleteByIds">
+        delete from emp_table where id in
+                              <foreach collection="ids" item="id" separator="," open="(" close=")">
+                                  #{id}
+                              </foreach>
+    </delete>
+    <!--根据条件查询员工-->
+    <select id="list" resultType="com.zisheng.pojo.Emp">
+        /*使用include标签的refid属性引入SQL字段*/
+        <include refid="searchByCondition"></include>
+        <where>
+            <if test="name != null and name != ''">name like concat('%',#{name},'%')</if>
+            <if test="gender != null">and gender = #{gender}</if>
+            <if test="start != null and end != null">and entry_date between #{start} and #{end}</if>
+        </where>
+        order by entry_date desc
+    </select>
+    <!--新增员工信息 由于主键ID是自增的，密码有默认值，因此可以不用插入-->
+    <insert id="insertEmp">
+        insert into  emp_table(username,  name, gender, image, job, entry_date, dep_id, create_time, update_time) values(#{username},#{name},#{gender},#{image},
+                                      #{job},#{entryDate},#{depId},#{createTime},#{updateTime})
+    </insert>
+    <update id="modifyEmp">
+        update emp_table
+        <set>
+            <if test="username != null and username != '' ">username=#{username},</if>
+            <if test="password != null and password != ''">password=#{password},</if>
+            <if test="gender != null">gender=#{gender},</if>
+            <if test="image != null and image != ''">image=#{image},</if>
+            <if test="name != null and name != ''">name=#{name},</if>
+            <if test="job != null">job=#{job},</if>
+            <if test="depId != null">dep_id=#{depId},</if>
+            <if test="entryDate != null">entry_date=#{entryDate},</if>
+            <if test="updateTime != null">update_time=#{updateTime}</if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

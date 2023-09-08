@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <!--指定当前工程所继承的父工程-->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.7.14</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <!-- 指定当前工程的打包方式为pom，表示当前工程只负责管理依赖，不写代码-->
+    <packaging>pom</packaging>
+    <groupId>com.zisheng</groupId>
+    <artifactId>tilas-parent</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <!--所有的子工程都需要引入的依赖-->
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+    </dependencies>
+    <!--通过dependencyManagement标签来控制依赖的版本-->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jjwt.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!--通过标签来设置版本号，设置之后就可以使用${}来获取指定标签名的值-->
+        <jjwt.version>0.9.1</jjwt.version>
+    </properties>
+    <!--聚合所有的模块，聚合之后可以进行一键打包操作，比较快捷，就不用一个个去打包了-->
+    <modules>
+        <module>../tilas-utils</module>
+        <module>../TilasSystem_SpringBoot_Mybatis - 副本</module>
+        <module>../tilas-pojo0</module>    </modules>
+    <!--配置资源上传的地址，即私服的地址，具体到某个仓库-->
+    <distributionManagement>
+        <!--release版本的maven项目上传地址-->
+        <repository>
+            <id>maven-releases</id>
+            <url>http://localhost:8081/repository/maven-releases/</url>
+        </repository>
+        <!--snapshot版本的maven项目上传地址-->
+        <snapshotRepository>
+            <id>maven-snapshots</id>
+            <url>http://localhost:8081/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+</project>

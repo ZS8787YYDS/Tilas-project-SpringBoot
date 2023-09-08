@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zisheng.Mapper.DeptMapper">
+    <sql id="insertDept">
+        insert into dep_table(id, name, create_time, update_time)
+    </sql>
+    <insert id="addDept">
+        <include refid="insertDept"></include>
+        values(#{id},#{name},#{createTime},#{updateTime});
+    </insert>
+    <update id="updateById">
+        update dep_table
+        <set>
+            <if test="name != null">name=#{name},</if>
+            <if test="createTime != null">create_time=#{createTime},</if>
+            <if test="updateTime != null">update_time=#{updateTime}</if>
+        </set>
+        where id = #{id};
+    </update>
+</mapper>

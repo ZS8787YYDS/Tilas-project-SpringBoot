@@ -1,0 +1,44 @@
+#配置数据库的连接信息
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/tilas
+    username: root
+    password: 8787521
+#配置单次上传文件的大小以及一次请求可以上传文件的最大大小
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
+#配置mybatis的日志以及打开驼峰命名的开关
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+# 开启Spring日志开关
+#配置参数信息
+aliyun:
+  oss:
+    endPoint: http://oss-cn-beijing.aliyuncs.com
+    accessKeyId: LTAI5tSjn1xbPtpEwomEYYKa
+    accessKeyPassword: HRkfcvWRxcG8TpyYSEmfSHn45Fjhkw
+    bucketName: web-tilas-yyds
+    objectName: images/
+# JWT令牌签名密钥
+signKey:
+  zisheng
+#定义对象/Map集合。如果是对象的话，user就是对象名称，如果是Map集合的话，user就是集合名称
+user:
+  name: 自胜
+  gender: 1
+  age: 1
+#定义数组/List/Set集合
+arr:
+  - c
+  - c++
+  - python
+  - java
+#spring事务管理日志
+#logging:
+#  level:
+#    org.springframework.jdbc.support.JdbcTransactionManager: debug
